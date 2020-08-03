@@ -17,11 +17,11 @@
   "author": "Mircea Sima",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^8.2.5",
-    "electron-packager": "^14.2.1",
-    "nodemon": "^2.0.3"
+    "electron": "^9.1.2",
+    "electron-packager": "^15.0.0",
+    "nodemon": "^2.0.4"
   },
   "dependencies": {
-    "electron-log": "^4.1.2"
+    "electron-log": "^4.2.2"
   }
 }
