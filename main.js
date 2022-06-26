@@ -1,5 +1,4 @@
 const { app, BrowserWindow, Menu } = require("electron");
-const log = require("electron-log");
 
 const { createMenuTemplate } = require("./Menu");
 
@@ -13,7 +12,7 @@ let mainWindow;
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
-    title: "Electron Starter",
+    title: "Astro 2048",
     width: isDev ? 800 : 500,
     height: 600,
     icon: `${__dirname}/assets/icons/icon.png`,
@@ -31,10 +30,26 @@ function createMainWindow() {
   mainWindow.loadURL(`file://${__dirname}/app/index.html`);
 }
 
+function createAboutWindow() {
+  aboutWindow = new BrowserWindow({
+    title: "About Astro 2048",
+    width: 500,
+    height: 500,
+    icon: `${__dirname}/assets/icons/icon.png`,
+    resizable: isDev,
+    backgroundColor: "#fff",
+  });
+
+  aboutWindow.loadURL(`file://${__dirname}/app/about.html`);
+  aboutWindow.setMenuBarVisibility(false);
+}
+
 app.on("ready", () => {
   createMainWindow();
 
-  const mainMenu = Menu.buildFromTemplate(createMenuTemplate(isMac, isDev));
+  const mainMenu = Menu.buildFromTemplate(
+    createMenuTemplate(isMac, isDev, app, createAboutWindow, mainWindow)
+  );
   Menu.setApplicationMenu(mainMenu);
 
   mainWindow.on("closed", () => (mainWindow = null));
