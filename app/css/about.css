@@ -10,7 +10,30 @@ body {
   color: #fff;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   height: 100vh;
   margin: 0;
+}
+
+.container {
+  padding: 0 2.5rem;
+  margin-top: 1.5rem;
+}
+
+.header {
+  text-align: center;
+}
+
+.about-text {
+  text-align: justify;
+}
+
+.details {
+  padding: 1rem 0 0 1rem;
+  margin-top: 2rem;
+  border-top: 2px solid white;
+}
+
+.details-item {
+  margin-bottom: 0.25rem;
 }

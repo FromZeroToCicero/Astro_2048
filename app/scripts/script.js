@@ -1,3 +1,5 @@
+const { ipcRenderer } = require("electron");
+
 import Grid from "./Grid.js";
 import Tile from "./Tile.js";
 
@@ -64,7 +66,7 @@ async function handleInput(e) {
 
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
     newTile.waitForTransition(true).then(() => {
-      alert("You lose");
+      ipcRenderer.send("game-over");
     });
 
     return;

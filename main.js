@@ -1,9 +1,9 @@
-const { app, BrowserWindow, Menu } = require("electron");
+const { app, BrowserWindow, Menu, ipcMain, dialog } = require("electron");
 
 const { createMenuTemplate } = require("./Menu");
 
 // Set env
-process.env.NODE_ENV = "development";
+process.env.NODE_ENV = "production";
 
 const isDev = process.env.NODE_ENV !== "production" ? true : false;
 const isMac = process.platform === "darwin" ? true : false;
@@ -13,10 +13,10 @@ let mainWindow;
 function createMainWindow() {
   mainWindow = new BrowserWindow({
     title: "Astro 2048",
-    width: isDev ? 800 : 500,
+    width: 800,
     height: 600,
     icon: `${__dirname}/assets/icons/icon.png`,
-    resizable: isDev ? true : false,
+    resizable: true,
     backgroundColor: "#fff",
     webPreferences: {
       nodeIntegration: true,
@@ -64,5 +64,23 @@ app.on("window-all-closed", () => {
 app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createMainWindow();
+  }
+});
+
+ipcMain.on("game-over", async () => {
+  const chosenOption = await dialog.showMessageBox(mainWindow, {
+    type: "info",
+    buttons: ["New game", "Quit game"],
+    defaultId: 0,
+    title: "Game over",
+    detail: "What would you like to do next?",
+    icon: "./assets/icons/icon.png",
+    cancelId: 1,
+  });
+
+  if (chosenOption.response === 0) {
+    mainWindow.reload();
+  } else {
+    app.quit();
   }
 });
